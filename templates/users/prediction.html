@@ -1,0 +1,45 @@
+
+{% extends 'users/userbase.html' %}
+{% load static %}
+{% block title %}Fruit Prediction{% endblock %}
+
+{% block content %}
+<div style="text-align: center;">
+  <h2 style="font-size: 2.2rem; margin-bottom: 2rem;">Fruit Prediction</h2>
+
+  {% if message %}
+    <div style="background-color: #ffcccc; color: #a94442; padding: 1rem; border-radius: 8px; margin-bottom: 20px;">
+      <strong>Notice:</strong> {{ message }}
+    </div>
+  {% endif %}
+
+  <form method="post" enctype="multipart/form-data" style="margin-bottom: 2rem;">
+    {% csrf_token %}
+    <input type="file" name="image" accept="image/*" required
+           style="padding: 0.8rem; border-radius: 8px; border: 2px solid #16A085; margin-bottom: 1rem;">
+    <br>
+    <button type="submit"
+            style="background-color: #16A085; color: white; border: none; padding: 0.8rem 2rem;
+                   font-size: 1rem; border-radius: 10px; cursor: pointer; transition: background 0.3s;">
+      Predict
+    </button>
+  </form>
+
+  {% if prediction %}
+    <div style="margin-top: 2rem;">
+      <h3 style="font-size: 1.6rem; color: #2C3E50;">🧠 Prediction:</h3>
+      <p style="font-size: 1.4rem; font-weight: 600; color: #D35400;">{{ prediction }}</p>
+
+      {% if image_url %}
+        <div style="margin-top: 1rem;">
+          <img src="{{ image_url }}" alt="Uploaded Image"
+               style="max-width: 300px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
+
+
+

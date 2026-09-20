@@ -1,0 +1,308 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI-powered fruit identification using CNNs with 84% accuracy">
+  <title>FruitID CNN - {% block title %}Home{% endblock %}</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+    * {
+      margin: 0; padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      transition: background-color 0.5s ease, color 0.5s ease;
+    }
+    body {
+      background: #FFF7E6;
+      color: #1A1A1A;
+      min-height: 100vh;
+    }
+    body.dark-mode {
+      background: #1C2526;
+      color: #E0E0E0;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: linear-gradient(135deg, #FF5E62, #FEA47F);
+      padding: 1.2rem 2rem;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+    .navbar.dark-mode {
+      background: linear-gradient(135deg, #2C3E50, #4B6584);
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 2.5rem;
+    }
+
+    .nav-link {
+      color: #FFFFFF;
+      text-decoration: none;
+      font-size: 1.2rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: 10px;
+      transition: background 0.4s ease, transform 0.4s ease;
+    }
+
+    .nav-link:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-4px);
+    }
+
+    
+    .mobile-menu-toggle {
+      display: none;
+      font-size: 2rem;
+      color: #FFFFFF;
+      cursor: pointer;
+    }
+
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #FFFFFF;
+    }
+
+    .hero-content {
+      max-width: 1000px;
+      padding: 3rem;
+    }
+
+    .hero h1 {
+      font-size: 4.5rem;
+      font-weight: 800;
+      margin-bottom: 2rem;
+      text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero p {
+      font-size: 1.8rem;
+      margin-bottom: 3rem;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+    }
+
+    .main-content {
+      padding: 120px 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* Section card */
+    .section-card {
+      background: #FFFFFF;
+      border-radius: 20px;
+      padding: 2.5rem;
+      margin: 2.5rem 0;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    .section-card.dark-mode {
+      background: #2D3436;
+    }
+    .section-card:hover {
+      transform: translateY(-15px);
+      box-shadow: 0 15px 40px rgba(255, 94, 98, 0.4);
+    }
+    .section-card h2 {
+      font-size: 2.5rem;
+      color: #FF5E62;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .section-card.dark-mode h2 {
+      color: #40C4FF;
+    }
+    .section-card p {
+      font-size: 1.3rem;
+      color: #1A1A1A;
+    }
+    .section-card.dark-mode p {
+      color: #e0e0e0;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.6rem;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 1rem;
+    }
+
+    
+
+    .submit-btn {
+      background: #FF5E62;
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      background: #e94e4f;
+    }
+
+    footer {
+      background: linear-gradient(135deg, #FF5E62, #FEA47F);
+      color: #ffffff;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+
+    footer.dark-mode {
+      background: linear-gradient(135deg, #2C3E50, #4B6584);
+    }
+
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background: inherit;
+        padding: 1.5rem;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+      }
+      .nav-links.active {
+        display: flex;
+      }
+      .mobile-menu-toggle {
+        display: block;
+      }
+      .hero h1 {
+        font-size: 3rem;
+      }
+      .hero p {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">FruitID CNN</div>
+      <ul class="nav-links">
+        <li><a href="#" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="{% url 'register' %}" class="nav-link"><i class="fas fa-user-plus"></i> Register</a></li>
+        <li><a href="{% url 'login' %}" class="nav-link"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+        <li><a href="{% url 'AdminLogin' %}" class="nav-link"><i class="fas fa-user-shield"></i> Admin</a></li>
+      </ul>
+      <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+      <div class="mobile-menu-toggle" id="mobileMenuToggle"><i class="fas fa-bars"></i></div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Automated AI-Powered Fruit Identification</h1>
+      <p>Unleash the power of CNNs to identify fruits with precision.</p>
+    </div>
+  </section>
+
+  <div class="main-content">
+    {% block content %}
+    
+    {% endblock %}
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <p>© 2025 FruitID CNN | Powered by CNNs</p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const themeToggle = document.getElementById('themeToggle');
+      const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+      const navLinks = document.querySelector('.nav-links');
+
+      function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+        document.querySelector('.navbar')?.classList.toggle('dark-mode');
+        document.querySelector('footer')?.classList.toggle('dark-mode');
+
+        // Toggle dark mode on other containers
+        document.querySelectorAll('.section-card, .form-wrapper, .form-group, input, label, .submit-btn')
+          .forEach(el => el.classList.toggle('dark-mode'));
+
+        themeToggle.innerHTML = document.body.classList.contains('dark-mode') 
+          ? '<i class="fas fa-sun"></i>' 
+          : '<i class="fas fa-moon"></i>';
+      }
+
+      themeToggle.addEventListener('click', toggleDarkMode);
+
+      mobileMenuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        gsap.from('.nav-links.active .nav-link', { opacity: 0, y: 20, stagger: 0.1, duration: 0.5 });
+      });
+
+      // Entry animations
+      gsap.from('.hero', { opacity: 0, duration: 2 });
+      gsap.from('.hero h1', { opacity: 0, y: 120, duration: 2, delay: 0.5 });
+      gsap.from('.hero p', { opacity: 0, y: 100, duration: 2, delay: 1 });
+      gsap.from('.navbar', { y: -100, opacity: 0, duration: 1.2 });
+      gsap.from('.nav-link', { opacity: 0, y: 20, stagger: 0.2, duration: 1, delay: 0.5 });
+      gsap.from('.section-card, .form-wrapper', { opacity: 0, y: 150, stagger: 0.5, duration: 1.5 });
+    });
+  </script>
+</body>
+</html>

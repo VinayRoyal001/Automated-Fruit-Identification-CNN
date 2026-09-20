@@ -1,0 +1,49 @@
+{% extends 'users/userbase.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div style="text-align: center; padding: 3rem 1rem;">
+  <h1 style="font-size: 3rem; margin-bottom: 1rem;">
+    🍎 Welcome to <span style="color: #FF5E62;">FruitID CNN</span> 🍌
+  </h1>
+  <p style="font-size: 1.2rem; max-width: 800px; margin: 0 auto; color: #555;">
+    Identify and classify fruits using our intelligent Convolutional Neural Network. Optimized for smart agriculture and AI-powered productivity.
+  </p>
+
+  <div style="margin-top: 3rem; display: flex; justify-content: center; flex-wrap: wrap; gap: 2rem;">
+    <a href="{% url 'training' %}" class="nav-link" style="
+      background: linear-gradient(135deg, #16A085, #1ABC9C);
+      color: white;
+      padding: 0.8rem 1.8rem;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      box-shadow: 0 6px 12px rgba(22, 160, 133, 0.3);
+      text-decoration: none;
+      transition: transform 0.3s ease;">
+      <i class="fas fa-brain"></i> Start Training
+    </a>
+
+    <a href="{% url 'prediction' %}" class="nav-link" style="
+      background: linear-gradient(135deg, #F39C12, #F1C40F);
+      color: white;
+      padding: 0.8rem 1.8rem;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      box-shadow: 0 6px 12px rgba(241, 196, 15, 0.3);
+      text-decoration: none;
+      transition: transform 0.3s ease;">
+      <i class="fas fa-apple-alt"></i> Predict Fruit
+    </a>
+  </div>
+<!-- 
+  <img src="{% static 'images/fruits_banner.png' %}" alt="Fruits Banner" style="
+    margin-top: 4rem;
+    max-width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);"> -->
+</div>
+{% endblock %}

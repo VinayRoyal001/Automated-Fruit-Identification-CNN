@@ -1,0 +1,34 @@
+{% extends 'admins/adminbase.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="section-card">
+  <h2><i class="fas fa-chart-bar"></i> Welcome, Admin</h2>
+  <p>Manage users and review system analytics from this panel.</p>
+
+  <div style="margin-top: 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+    <div style="padding: 2rem; background: #ffffff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center;">
+      <i class="fas fa-users fa-2x" style="color: #00b894;"></i>
+      <h3 style="margin-top: 1rem;">User Management</h3>
+      <p>View and manage registered users.</p>
+      <a href="#" class="nav-link" style="margin-top: 1rem; display: inline-block; background-color: #00b894; color: white; padding: 0.5rem 1.2rem; border-radius: 8px;">View Users</a>
+    </div>
+
+    <div style="padding: 2rem; background: #ffffff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center;">
+      <i class="fas fa-chart-line fa-2x" style="color: #0984e3;"></i>
+      <h3 style="margin-top: 1rem;">Analytics</h3>
+      <p>Monitor usage statistics and prediction trends.</p>
+      <a href="#" class="nav-link" style="margin-top: 1rem; display: inline-block; background-color: #0984e3; color: white; padding: 0.5rem 1.2rem; border-radius: 8px;">View Analytics</a>
+    </div>
+
+    <div style="padding: 2rem; background: #ffffff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center;">
+      <i class="fas fa-cogs fa-2x" style="color: #fdcb6e;"></i>
+      <h3 style="margin-top: 1rem;">System Settings</h3>
+      <p>Update and configure the backend system.</p>
+      <a href="#" class="nav-link" style="margin-top: 1rem; display: inline-block; background-color: #fdcb6e; color: white; padding: 0.5rem 1.2rem; border-radius: 8px;">Settings</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

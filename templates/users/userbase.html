@@ -1,0 +1,194 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FruitID CNN - {% block title %}User{% endblock %}</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      transition: background-color 0.5s ease, color 0.5s ease;
+    }
+
+    body {
+      background: #FFF7E6;
+      color: #1A1A1A;
+      min-height: 100vh;
+    }
+
+    body.dark-mode {
+      background: #1C2526;
+      color: #E0E0E0;
+    }
+
+    .navbar {
+      background: linear-gradient(135deg, #16A085, #F4D03F);
+      padding: 1.2rem 2rem;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .navbar.dark-mode {
+      background: linear-gradient(135deg, #2C3E50, #4B6584);
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: 2px;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-link {
+      color: #FFFFFF;
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding: 0.6rem 1rem;
+      border-radius: 10px;
+      transition: background 0.4s ease, transform 0.4s ease;
+    }
+
+    .nav-link:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-4px);
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      color: #FFFFFF;
+      font-size: 1.6rem;
+      cursor: pointer;
+    }
+
+    .theme-toggle.dark-mode {
+      color: #FFD700;
+    }
+
+    .mobile-menu-toggle {
+      display: none;
+      font-size: 2rem;
+      color: #FFFFFF;
+      cursor: pointer;
+    }
+
+    .main-content {
+      padding: 120px 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    footer {
+      background: linear-gradient(135deg, #16A085, #F4D03F);
+      color: #FFFFFF;
+      padding: 3rem 2rem;
+      text-align: center;
+      margin-top: 3rem;
+    }
+
+    footer.dark-mode {
+      background: linear-gradient(135deg, #2C3E50, #4B6584);
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background: inherit;
+        padding: 1.5rem;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .mobile-menu-toggle {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">FruitID User</div>
+      <ul class="nav-links">
+        <li><a href="{% url 'UserHome' %}" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="{% url 'training' %}" class="nav-link"><i class="fas fa-brain"></i> Training</a></li>
+        <li><a href="{% url 'prediction' %}" class="nav-link"><i class="fas fa-apple-alt"></i> Prediction</a></li>
+        <li><a href="{% url 'index' %}" class="nav-link"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+      </ul>
+      <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+      <div class="mobile-menu-toggle" id="mobileMenuToggle"><i class="fas fa-bars"></i></div>
+    </div>
+  </nav>
+
+  <div class="main-content">
+    {% block content %}
+      
+    {% endblock %}
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <p>© 2025 FruitID CNN | Empowering Smart Agriculture</p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const themeToggle = document.getElementById('themeToggle');
+      const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+      const navLinks = document.querySelector('.nav-links');
+
+      themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        document.querySelector('.navbar').classList.toggle('dark-mode');
+        document.querySelector('footer').classList.toggle('dark-mode');
+        themeToggle.innerHTML = document.body.classList.contains('dark-mode') 
+          ? '<i class="fas fa-sun"></i>' 
+          : '<i class="fas fa-moon"></i>';
+      });
+
+      mobileMenuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        gsap.from('.nav-links.active .nav-link', { opacity: 0, y: 20, stagger: 0.1, duration: 0.5 });
+      });
+
+      gsap.from('.navbar', { y: -100, opacity: 0, duration: 1.2 });
+      gsap.from('.nav-link', { opacity: 0, y: 20, stagger: 0.2, duration: 1, delay: 0.5 });
+    });
+  </script>
+</body>
+</html>

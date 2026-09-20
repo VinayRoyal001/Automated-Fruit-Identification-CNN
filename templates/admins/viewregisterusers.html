@@ -1,0 +1,127 @@
+{% extends 'admins/adminbase.html' %}
+{% load static %}
+
+{% block title %}View Users{% endblock %}
+
+{% block content %}
+<style>
+  .table-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+  }
+
+  table {
+      width: 90%;
+      border-collapse: collapse;
+      background-color: #ffffff;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      font-size: 1rem;
+      color: #333;
+      border-radius: 10px;
+      overflow: hidden;
+  }
+
+  th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: center;
+  }
+
+  th {
+      background-color: #00b894;
+      color: white;
+  }
+
+  td {
+      color: #444;
+  }
+
+  h2 {
+      text-align: center;
+      margin-top: 80px;
+      font-weight: 700;
+      color: #2d3436;
+  }
+
+  .btn-primary {
+      padding: 6px 12px;
+      background-color: #0984e3;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-size: 0.9rem;
+      cursor: pointer;
+  }
+
+  .btn-primary:hover {
+      background-color: #0652DD;
+  }
+
+  .badge-success {
+      background-color: #2ecc71;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+  }
+
+  .text-warning {
+      color: #f39c12;
+      font-weight: 600;
+  }
+
+  .text-success {
+      color: #27ae60;
+      font-weight: 600;
+  }
+
+  a.btn-link {
+      margin-left: 10px;
+      font-weight: bold;
+      color: #e74c3c;
+  }
+</style>
+
+<h2>Registered User Details</h2>
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>S.No</th>
+        <th>Name</th>
+        <th>Login ID</th>
+        <th>Mobile</th>
+        <th>Email</th>
+        <th>Locality</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in data %}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ i.name }}</td>
+        <td>{{ i.loginid }}</td>
+        <td>{{ i.mobile }}</td>
+        <td>{{ i.email }}</td>
+        <td>{{ i.locality }}</td>
+        <td class="{% if i.status == 'waiting' %}text-warning{% else %}text-success{% endif %}">
+          {{ i.status|capfirst }}
+        </td>
+        <td>
+          {% if i.status == 'waiting' %}
+            <a class="btn-primary" href="/ActivaUsers/?uid={{ i.id }}">Activate</a>
+          {% else %}
+            <span class="badge-success">Activated</span>
+            <a class="btn-link" href="/DeleteUsers/?uid={{ i.id }}">Delete</a>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

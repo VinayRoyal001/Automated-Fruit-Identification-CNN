@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Admin Login{% endblock %}
+
+{% block content %}
+<div class="login-container">
+  <div class="section-card login-card">
+    <h2><i class="fas fa-user-shield"></i> Admin Login</h2>
+    <p>Administrator access for FruitID CNN.</p>
+
+    <form method="POST" action="{% url 'AdminLoginCheck' %}">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="username"><i class="fas fa-user"></i> Username</label>
+        <input type="text" id="username" name="username" placeholder="Enter admin username" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password"><i class="fas fa-lock"></i> Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter password" required>
+      </div>
+
+      <button type="submit" class="submit-btn">
+        <i class="fas fa-sign-in-alt"></i> Login
+      </button>
+
+      {% if messages %}
+        <div class="error-container">
+          {% for message in messages %}
+            <p class="error-message {{ message.tags }}">{{ message }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </form>
+  </div>
+</div>
+
+<style>
+  .login-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .login-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 3.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 600px;
+  }
+
+  .login-card.dark-mode {
+    background: rgba(45, 52, 54, 0.95);
+  }
+
+  .login-card h2 {
+    font-size: 2.8rem;
+    color: #FF5E62;
+    margin-bottom: 1.2rem;
+    text-align: center;
+  }
+
+  .login-card.dark-mode h2 {
+    color: #40C4FF;
+  }
+
+  .login-card p {
+    font-size: 1.3rem;
+    color: #1A1A1A;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .login-card.dark-mode p {
+    color: #E0E0E0;
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group label {
+    font-size: 1.2rem;
+    color: #1A1A1A;
+    font-weight: 600;
+  }
+
+  .form-group.dark-mode label {
+    color: #E0E0E0;
+  }
+
+  .form-group input {
+    width: 100%;
+    padding: 0.9rem;
+    border: 2px solid #FF5E62;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    background: #FFF7E6;
+    color: #1A1A1A;
+  }
+
+  .form-group.dark-mode input {
+    background: #3C4F5C;
+    color: #E0E0E0;
+    border-color: #40C4FF;
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, #FF5E62, #FEA47F);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 1.4rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .submit-btn:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(135deg, #FEA47F, #FF5E62);
+    box-shadow: 0 6px 15px rgba(255, 94, 98, 0.4);
+  }
+
+  .error-container {
+    margin-top: 1rem;
+    text-align: center;
+  }
+
+  .error-message {
+    color: #FF5E62;
+    font-size: 1.1rem;
+    background: #FFF0E6;
+    padding: 0.7rem;
+    border-radius: 8px;
+  }
+
+  .dark-mode .error-message {
+    background: #3C4F5C;
+    color: #FF8A80;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // gsap.from('.login-card', { opacity: 0, y: 50, duration: 1, ease: 'power3.out' });
+  });
+</script>
+{% endblock %}

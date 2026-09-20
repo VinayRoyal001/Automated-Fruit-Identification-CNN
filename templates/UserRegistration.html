@@ -1,0 +1,393 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!-- register.html loaded -->
+
+{% block title %}Register{% endblock %}
+{% block content %}
+  <div class="register-container">
+    <div class="section-card register-card">
+      <h2><i class="fas fa-user-plus"></i> Create Your Account</h2>
+      <p>Join the FruitID CNN community and identify fruits with AI!</p>
+      
+      <form id="registerForm" method="POST" action="{% url 'register' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="submit-btn">
+          <i class="fas fa-rocket"></i> Register Now
+        </button>
+        <p class="login-link">
+          Already have an account? <a href="{% url 'login' %}">Log in here</a>
+        </p>
+        {% if messages %}
+          <div class="error-container">
+            {% for message in messages %}
+              <p class="error-message {{ message.tags }}">{{ message }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </form>
+    </div>
+  </div>
+
+  <style>
+    .register-container {
+      max-width: 700px;
+      margin: 100px auto;
+      padding: 0 20px;
+      min-height: calc(100vh - 200px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .register-card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      padding: 3.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .register-card.dark-mode {
+      background: rgba(45, 52, 54, 0.95);
+    }
+
+    .register-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(255, 94, 98, 0.4);
+    }
+
+    .register-card h2 {
+      font-size: 2.8rem;
+      color: #FF5E62;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .register-card.dark-mode h2 {
+      color: #40C4FF;
+    }
+
+    .register-card p {
+      font-size: 1.3rem;
+      color: #1A1A1A;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .register-card.dark-mode p {
+      color: #E0E0E0;
+    }
+
+    .form-group {
+      margin-bottom: 2rem;
+    }
+
+    .form-group label {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #1A1A1A;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group.dark-mode label {
+      color: #E0E0E0;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1.1rem;
+      border: 2px solid #FF5E62;
+      border-radius: 10px;
+      outline: none;
+      background: #FFF7E6;
+      color: #1A1A1A;
+      transition: border-color 10px 30px rgba(0, 0, 0, 0.2);
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .register-card.dark-mode {
+      background: rgba(45, 52, 54, 0.95);
+    }
+
+    .register-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(255, 94, 98, 0.4);
+    }
+
+    .register-card h2 {
+      font-size: 2.8rem;
+      color: #FF5E62;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .register-card.dark-mode h2 {
+      color: #40C4FF;
+    }
+
+    .register-card p {
+      font-size: 1.3rem;
+      color: #1A1A1A;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .register-card.dark-mode p {
+      color: #E0E0E0;
+    }
+
+    .form-group {
+      margin-bottom: 2rem;
+    }
+
+    .form-group label {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #1A1A1A;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group.dark-mode label {
+      color: #E0E0E0;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1.1rem;
+      border: 2px solid #FF5E62;
+      border-radius: 10px;
+      outline: none;
+      background: #FFF7E6;
+      color: #1A1A1A;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-group.dark-mode input {
+      background: #3C4F5C;
+      color: #E0E0E0;
+      border-color: #40C4FF;
+    }
+
+    .form-group input:focus {
+      border-color: #FEA47F;
+      box-shadow: 0 0 10px rgba(255, 94, 98, 0.3);
+    }
+
+    .form-group.dark-mode input:focus {
+      border-color: #80D8FF;
+      box-shadow: 0 0 10px rgba(64, 196, 255, 0.3);
+    }
+
+    .form-group input::placeholder {
+      color: #999;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 1.2rem;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #FFFFFF;
+      background: linear-gradient(135deg, #FF5E62, #FEA47F);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: background 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .submit-btn:hover {
+      background: linear-gradient(135deg, #FEA47F, #FF5E62);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(255, 94, 98, 0.4);
+    }
+
+    .submit-btn.dark-mode {
+      background: linear-gradient(135deg, #2C3E50, #4B6584);
+    }
+
+    .submit-btn.dark-mode:hover {
+      background: linear-gradient(135deg, #4B6584, #2C3E50);
+      box-shadow: 0 6px 15px rgba(64, 196, 255, 0.4);
+    }
+
+    .error-container {
+      margin-bottom: 2rem;
+    }
+
+    .error-message {
+      color: #FF5E62;
+      font-size: 1rem;
+      margin-top: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: #FFF0E6;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    .dark-mode .error-message {
+      background: #3C4F5C;
+      color: #FF8A80;
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 1.2rem;
+      color: #1A1A1A;
+    }
+
+    .dark-mode .login-link {
+      color: #E0E0E0;
+    }
+
+    .login-link a {
+      color: #FF5E62;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .login-link a:hover {
+      color: #FEA47F;
+      text-decoration: underline;
+    }
+
+    .dark-mode .login-link a {
+      color: #40C4FF;
+    }
+
+    .dark-mode .login-link a:hover {
+      color: #80D8FF;
+    }
+
+    @media (max-width: 768px) {
+      .register-container {
+        margin: 80px auto;
+        padding: 0 15px;
+      }
+
+      .register-card {
+        padding: 2rem;
+      }
+
+      .register-card h2 {
+        font-size: 2.2rem;
+      }
+
+      .register-card p {
+        font-size: 1.1rem;
+      }
+
+      .form-group label {
+        font-size: 1.1rem;
+      }
+
+      .form-group input {
+        padding: 0.9rem;
+        font-size: 1rem;
+      }
+
+      .submit-btn {
+        padding: 1rem;
+        font-size: 1.2rem;
+      }
+
+      .login-link {
+        font-size: 1.1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .register-card {
+        padding: 1.5rem;
+      }
+
+      .register-card h2 {
+        font-size: 1.8rem;
+      }
+
+      .register-card p {
+        font-size: 1rem;
+      }
+
+      .form-group input {
+        padding: 0.8rem;
+        font-size: 0.95rem;
+      }
+
+      .submit-btn {
+        padding: 0.9rem;
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script>
+   
+      // Animate form inputs on focus
+      document.querySelectorAll('.form-group input').forEach(input => {
+        input.addEventListener('focus', () => {
+          gsap.to(input, {
+            scale: 1.01,
+            boxShadow: '0 0 12px rgba(255, 94, 98, 0.4)',
+            duration: 0.3,
+            ease: 'power2.out',
+          });
+        });
+        input.addEventListener('blur', () => {
+          gsap.to(input, {
+            scale: 1,
+            boxShadow: 'none',
+            duration: 0.3,
+            ease: 'power2.out',
+          });
+        });
+      });
+
+      // Animate submit button
+      const submitBtn = document.querySelector('.submit-btn');
+      gsap.from(submitBtn, {
+        opacity: 0,
+        scale: 0.9,
+        duration: 0.8,
+        delay: 0.5,
+        ease: 'elastic.out(1, 0.6)',
+      });
+      submitBtn.addEventListener('mouseenter', () => {
+        gsap.to(submitBtn, {
+          scale: 1.03,
+          duration: 0.3,
+          ease: 'power2.out',
+        });
+      });
+      submitBtn.addEventListener('mouseleave', () => {
+        gsap.to(submitBtn, {
+          scale: 1,
+          duration: 0.3,
+          ease: 'power2.out',
+        });
+      });
+  </script>
+{% endblock %}

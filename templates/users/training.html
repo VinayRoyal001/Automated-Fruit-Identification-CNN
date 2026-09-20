@@ -1,0 +1,31 @@
+{% extends 'users/userbase.html' %}
+{% load static %}
+
+{% block title %}Training{% endblock %}
+
+{% block content %}
+  <div style="text-align: center;">
+    <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Model Training Completed</h2>
+
+    {% if test_accuracy %}
+      <p style="font-size: 1.3rem; margin-bottom: 1.5rem;">Test Accuracy: 
+        <span style="color: #16A085; font-weight: 700;">{{ test_accuracy }}</span>
+      </p>
+    {% endif %}
+    {% else%}
+    <div>
+      <h1>Training is in progress please wait until the Training and epochs are completed.......</h1>
+    </div>
+
+    {% if plot_path %}
+      <div style="margin-top: 30px;">
+        <h3 style="margin-bottom: 10px;">Training Accuracy Graph</h3>
+        <img src="{{ plot_path }}" alt="Training Accuracy Plot" style="max-width: 90%; border-radius: 12px; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);">
+      </div>
+    {% endif %}
+
+    <div style="margin-top: 3rem;">
+      <a href="{% url 'predict_view' %}" class="nav-link" style="background: #16A085; color: #fff; padding: 0.8rem 1.5rem; border-radius: 8px; font-weight: 600; text-decoration: none;">Go to Prediction</a>
+    </div>
+  </div>
+{% endblock %}
